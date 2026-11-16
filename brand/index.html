@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>bartleby brand sheet</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --page: #ffffff; --rule: #d4d3cc; --ink: #0f1412; --graphite: #5d5d66; --old: #8a8a91;
+    --basalt: #2a2d2e; --pine: #1f5c45; --pine-edge: #123b2c; --cedar: #c2512b; --mist: #dfe7e3; --slate: #4d6a75; --moss: #9bb068;
+    --mono: "DM Mono", ui-monospace, Menlo, monospace;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--page); color: var(--ink); font: 14px/1.6 var(--mono); }
+  main { max-width: 900px; margin: 0 auto; padding: 40px 24px 96px; }
+  h1 { font-size: 13px; font-weight: 400; color: var(--graphite); margin: 0 0 28px; }
+  h2 { font-size: 13px; font-weight: 500; color: var(--graphite); margin: 52px 0 14px; }
+  h2::before { content: "// "; color: var(--pine); }
+  .row { display: flex; gap: 14px; flex-wrap: wrap; align-items: stretch; }
+  .box { border: 1px solid var(--rule); border-radius: 6px; padding: 20px; }
+  .cap { font-size: 12px; color: var(--old); margin-top: 8px; }
+  .wm { font-size: 38px; font-weight: 500; letter-spacing: -1.5px; line-height: 1; }
+  .wm span { color: var(--pine); }
+  svg.bt { display: block; }
+
+  .btn { height: 44px; padding: 0 20px; border: 0; border-radius: 8px; font: 500 14px var(--mono); cursor: pointer; }
+  .btn:active { transform: translateY(2px); }
+  .btn.pri { background: var(--pine); color: #fff; box-shadow: inset 0 -3px 0 rgba(15, 20, 18, .3); }
+  .btn.pri:active { box-shadow: inset 0 -1px 0 rgba(15, 20, 18, .3); }
+  .btn.sec { background: #fff; color: var(--ink); box-shadow: inset 0 0 0 1px var(--rule), inset 0 -3px 0 var(--rule); }
+  .btn.sec:active { box-shadow: inset 0 0 0 1px var(--rule), inset 0 -1px 0 var(--rule); }
+  .btn.sm { height: 34px; padding: 0 12px; font-size: 13px; }
+  .field { display: flex; gap: 8px; max-width: 640px; }
+  .input { flex: 1; min-width: 0; height: 44px; border-radius: 8px; background: #fff; border: 0; box-shadow: inset 0 0 0 1px var(--rule); padding: 0 14px; font: 14px var(--mono); color: var(--ink); outline: none; }
+  .input:focus { box-shadow: inset 0 0 0 2px var(--pine); }
+
+  .state { border: 1px solid var(--rule); border-radius: 6px; background: #fff; cursor: pointer; flex: 1; min-width: 120px; padding: 14px 8px 12px; font: inherit; text-align: center; }
+  .state:hover { border-color: var(--ink); }
+  .state svg { margin: 0 auto; }
+
+  .quote { margin: 0 0 6px; min-height: 96px; transition: opacity .3s; }
+  .quote.off { opacity: 0; }
+  .quote blockquote { margin: 0; font-size: 20px; font-weight: 500; line-height: 1.35; letter-spacing: -.4px; max-width: 26em; }
+  .quote figcaption { font-size: 12px; color: var(--old); margin-top: 8px; }
+  .out { font-size: 14px; line-height: 1.8; min-height: 96px; }
+  .out:empty { display: none; }
+  .out .w { opacity: 0; animation: word .18s ease-out forwards; }
+  .out .ts { font-size: 12px; color: var(--cedar); margin-right: 8px; }
+  @keyframes word { from { opacity: 0; transform: translateY(3px); } to { opacity: 1; transform: none; } }
+  .status { font-size: 12px; color: var(--graphite); margin-top: 14px; }
+  .track { height: 2px; background: var(--mist); margin-top: 8px; }
+  .track i { display: block; height: 100%; width: 0; background: var(--pine); }
+
+  .sw { width: 116px; }
+  .sw i { display: block; height: 52px; border: 1px solid rgba(15, 20, 18, .1); }
+  .sw b { display: block; font-weight: 500; font-size: 12px; margin-top: 6px; }
+  .sw span { font-size: 12px; color: var(--old); }
+  .tab { display: inline-flex; align-items: center; gap: 8px; height: 32px; padding: 0 12px; border-radius: 8px 8px 0 0; font: 12px -apple-system, "Helvetica Neue", sans-serif; }
+  .tab.l { background: #e9eaee; color: #222; }
+  .tab.d { background: #2a2b30; color: #e8e8ea; }
+  pre { margin: 0; font: 13px/1.25 var(--mono); }
+  .dim { color: var(--old); }
+</style>
+</head>
+<body>
+<main>
+  <h1>bartleby["] brand sheet / lo-fi pass: pixel mascot, monospace, pine green</h1>
+
+  <div class="row">
+    <div class="box" style="flex: 2; min-width: 320px; display: flex; align-items: center; gap: 28px; position: relative; overflow: hidden;">
+      <canvas id="rain" aria-hidden="true" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none"></canvas>
+      <svg class="bt" id="hero" width="160" height="144" style="position:relative;flex:none"></svg>
+      <div style="position:relative">
+        <div class="wm">bartleby<span>["]</span></div>
+        <div class="cap">any video to text. free, open source, no ads.</div>
+        <div id="heroline" style="margin-top: 14px; min-height: 1.6em;"></div>
+      </div>
+    </div>
+    <div class="box" style="flex: 1; min-width: 230px;">
+      <div class="row" style="align-items: flex-end; gap: 14px;">
+        <img src="favicon.svg" width="64" height="64" alt="">
+        <img src="favicon.svg" width="32" height="32" alt="">
+        <img src="favicon.svg" width="16" height="16" alt="">
+      </div>
+      <div class="cap">favicon at 64 / 32 / 16. drawn on a 16px grid, so the smallest size is pixel-exact.</div>
+      <div style="margin-top: 16px;">
+        <span class="tab l"><img src="favicon.svg" width="16" height="16" alt="">bartleby: reel to text</span>
+        <span class="tab d"><img src="favicon.svg" width="16" height="16" alt="">bartleby: reel to text</span>
+      </div>
+    </div>
+  </div>
+
+  <h2>mascot states (click one to play it on the big one)</h2>
+  <div class="row" id="states"></div>
+  <div class="cap">bartleby, the scrivener from melville's 1853 story, in his green hoodie and bowler hat. a 20x18 pixel sprite built from parts and animated a few frames a second, like a gif but about 2 KB and sharp at any size.</div>
+
+  <h2>loading sequence (he sighs, quotes fill the wait, then the words arrive)</h2>
+  <div class="box">
+    <div class="field">
+      <input class="input" value="https://instagram.com/reel/C8xYz..." aria-label="Video link">
+      <button class="btn pri" id="run">transcribe</button>
+    </div>
+    <div class="row" style="margin-top: 20px; align-items: flex-start; flex-wrap: nowrap;">
+      <div style="flex: none; width: 130px;">
+        <svg class="bt" id="loader" width="120" height="108"></svg>
+        <div class="cap" id="loaderline" style="min-height: 3.4em; color: var(--graphite);">&gt; psst. got a link?</div>
+      </div>
+      <div style="flex: 1; min-width: 0;">
+        <figure class="quote off" id="quote" hidden><blockquote></blockquote><figcaption></figcaption></figure>
+        <div class="out" id="out"></div>
+        <div class="status" id="status">[&nbsp;&nbsp;] waiting for a link</div>
+        <div class="track"><i id="prog"></i></div>
+      </div>
+    </div>
+  </div>
+
+  <h2>buttons and input</h2>
+  <div class="row" style="align-items: center;">
+    <button class="btn pri">transcribe</button>
+    <button class="btn sec">drop a file</button>
+    <button class="btn sm pri">copy</button>
+    <button class="btn sm sec">.srt</button>
+    <button class="btn sm sec">.txt</button>
+  </div>
+  <div class="cap">same pressed-edge buttons as propresets, with tighter corners and mono labels.</div>
+
+  <h2>colour</h2>
+  <div class="row">
+    <div class="sw"><i style="background:#fff"></i><b>page</b><span>#ffffff</span></div>
+    <div class="sw"><i style="background:#0f1412"></i><b>ink</b><span>#0f1412</span></div>
+    <div class="sw"><i style="background:#2a2d2e"></i><b>basalt</b><span>#2a2d2e</span></div>
+    <div class="sw"><i style="background:#1f5c45"></i><b>pine</b><span>#1f5c45</span></div>
+    <div class="sw"><i style="background:#c2512b"></i><b>cedar</b><span>#c2512b</span></div>
+    <div class="sw"><i style="background:#4d6a75"></i><b>rain slate</b><span>#4d6a75</span></div>
+    <div class="sw"><i style="background:#9bb068"></i><b>moss</b><span>#9bb068</span></div>
+    <div class="sw"><i style="background:#dfe7e3"></i><b>mist</b><span>#dfe7e3</span></div>
+  </div>
+  <div class="cap">mostly black on white. basalt is the dark grey background for the terminal pane and other dark surfaces. pine is for the button, his hoodie and small accents.</div>
+
+  <h2>type</h2>
+  <div class="box">
+    <div style="font-size: 28px; font-weight: 500; letter-spacing: -1px;">any video to text.</div>
+    <div style="margin-top: 6px;">paste a reel, tiktok or short. get the transcript.</div>
+    <div class="cap">DM Mono 400 / 500 for everything, lowercase by default. free to use, no licence needed.</div>
+  </div>
+
+  <h2>terminal and README</h2>
+  <div class="row">
+    <div class="box"><pre>     .---.
+   _(_____)_
+    ( ._. )
+
+ psst. got a link?</pre>
+      <div class="cap" style="margin-top:14px">sigh &nbsp;( -_- )<br>listen ( o_o )<br>typing ( ._.)<br>done &nbsp;( -_- )<br>error ( -_- )</div></div>
+    <div class="box" style="flex: 1; min-width: 260px; line-height: 1.9; background: var(--basalt); border-color: var(--basalt); color: #e9ece9;">
+      <div style="color:#9aa3a0"># the same tool, in your terminal</div>
+      <div>$ bartleby https://instagram.com/reel/...</div>
+      <div style="color:#9aa3a0">( -_- ) ugh. fine.</div>
+      <div><span style="color:#8dbfa6">[ok]</span> 26 words, saved to reel.txt</div>
+      <div style="color:#9aa3a0">( ._. ) there. word for word.</div>
+    </div>
+  </div>
+
+  <h2>voice (reluctant, but always does the job)</h2>
+  <div class="box" style="line-height: 2;">
+    <div><span class="dim">empty &nbsp;&nbsp;</span> psst. got a link?</div>
+    <div><span class="dim">submit &nbsp;</span> ugh. fine. <span class="dim">/ *sigh* if you insist. / alright, alright.</span></div>
+    <div><span class="dim">working </span> go on. i'm listening.</div>
+    <div><span class="dim">done &nbsp;&nbsp;&nbsp;</span> there. word for word.</div>
+    <div><span class="dim">error &nbsp;&nbsp;</span> can't. that one's private. next.</div>
+    <div><span class="dim">ads, signup, tracking </span> I would prefer not to. <span style="color:var(--cedar)">// the one thing he refuses</span></div>
+  </div>
+</main>
+
+<script src="rain.js"></script>
+<script src="mascot.js"></script>
+<script>
+asciiRain(document.getElementById("rain"));
+
+/* What he says in each state. On the real site these appear as text beside him. */
+const LINES = {
+  idle: "psst. got a link?",
+  sigh: "ugh. fine.",
+  listening: "go on. i'm listening.",
+  typing: "writing it down. every word.",
+  done: "there. word for word.",
+  error: "can't. that one's private. next.",
+};
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+const hero = document.getElementById("hero");
+const heroLine = document.getElementById("heroline");
+const loader = document.getElementById("loader");
+const loaderLine = document.getElementById("loaderline");
+BT.set(hero, "idle");
+BT.set(loader, "idle");
+
+const turns = new WeakMap();
+async function say(el, text) {
+  const id = (turns.get(el) || 0) + 1;
+  turns.set(el, id);
+  el.textContent = "> ";
+  for (const ch of text) {
+    if (turns.get(el) !== id) return;
+    el.textContent += ch;
+    await sleep(18);
+  }
+}
+say(heroLine, LINES.idle);
+
+const statesEl = document.getElementById("states");
+for (const s of Object.keys(LINES)) {
+  const b = document.createElement("button");
+  b.className = "state";
+  const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  svg.setAttribute("class", "bt"); svg.setAttribute("width", 100); svg.setAttribute("height", 90);
+  const name = document.createElement("div"); name.textContent = s; name.style.marginTop = "8px";
+  const line = document.createElement("div"); line.className = "cap"; line.style.marginTop = "2px"; line.textContent = LINES[s];
+  b.append(svg, name, line);
+  BT.set(svg, s);
+  b.onclick = () => { BT.set(hero, s); BT.set(svg, s); say(heroLine, LINES[s]); };
+  statesEl.appendChild(b);
+}
+
+/* Loading demo: simulated timings. Quotes fill the wait; one status line and a thin track stay honest about progress. */
+const out = document.getElementById("out");
+const statusEl = document.getElementById("status");
+const prog = document.getElementById("prog");
+const quoteEl = document.getElementById("quote");
+const SPIN = "⠋⠙⠹⠸⠼⠴⠦⠧⠇⠏";
+const TEXT = [["0:00", "Three things nobody tells you about posting every day."], ["0:04", "First, your hook matters more than your edit."], ["0:09", "Second, say it out loud before you film it."]];
+let runId = 0, QUOTES = [], qi = 0, qTimer = 0;   // runId: pressing transcribe again cancels the run in progress
+fetch("quotes.json").then((r) => r.json()).then((d) => { QUOTES = d.quotes.sort(() => Math.random() - 0.5); });
+
+function showQuote() {
+  if (!QUOTES.length) return;
+  const q = QUOTES[qi++ % QUOTES.length];
+  quoteEl.classList.add("off");
+  setTimeout(() => {
+    quoteEl.querySelector("blockquote").textContent = q.text;
+    quoteEl.querySelector("figcaption").textContent = "// " + q.by + (q.source ? ", " + q.source : "");
+    quoteEl.classList.remove("off");
+  }, 300);
+}
+function startQuotes() { clearInterval(qTimer); quoteEl.hidden = false; showQuote(); qTimer = setInterval(showQuote, 2800); }
+function stopQuotes() { clearInterval(qTimer); quoteEl.hidden = true; quoteEl.classList.add("off"); }
+
+// Every wait checks that this run is still the current one, so the sequence can be restarted at any point.
+async function stage(alive, label, ms, from, to) {
+  const t0 = performance.now();
+  let i = 0;
+  while (alive() && performance.now() - t0 < ms) {
+    const f = (performance.now() - t0) / ms;
+    statusEl.textContent = `${SPIN[i++ % SPIN.length]} ${label}`;
+    prog.style.width = from + (to - from) * f + "%";
+    await sleep(60);
+  }
+}
+
+const mood = (state) => { BT.set(loader, state); say(loaderLine, LINES[state]); };
+
+document.getElementById("run").onclick = async () => {
+  const id = ++runId;
+  const alive = () => id === runId;
+  stopQuotes();
+  out.textContent = ""; prog.style.width = "0%";
+  mood("sigh");
+  statusEl.textContent = "...";
+  await sleep(1300); if (!alive()) return;
+  mood("listening");
+  startQuotes();
+  await stage(alive, "fetching audio (0:42, 680 KB)", 2200, 0, 25); if (!alive()) return;
+  await stage(alive, "loading model (39 MB, cached for next time)", 3600, 25, 60); if (!alive()) return;
+  stopQuotes();
+  mood("typing");
+  let words = 0;
+  const total = TEXT.reduce((n, [, t]) => n + t.split(" ").length, 0);
+  for (const [ts, sentence] of TEXT) {
+    const p = document.createElement("div");
+    const stamp = document.createElement("span");
+    stamp.className = "ts"; stamp.textContent = ts;
+    p.appendChild(stamp);
+    out.appendChild(p);
+    for (const w of sentence.split(" ")) {
+      const s = document.createElement("span");
+      s.className = "w"; s.textContent = w + " ";
+      p.appendChild(s);
+      words++;
+      statusEl.textContent = `${SPIN[words % SPIN.length]} writing it down`;
+      prog.style.width = 60 + (words / total) * 40 + "%";
+      await sleep(70); if (!alive()) return;
+    }
+  }
+  statusEl.textContent = `[ok] ${total} words in 3.1s, on your device`;
+  mood("done");
+};
+</script>
+</body>
+</html>

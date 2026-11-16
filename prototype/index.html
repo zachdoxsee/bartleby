@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>bartleby: any video to text</title>
+<link rel="icon" href="../brand/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#1f5c45">
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<div class="app" data-mode="simple" data-view="start" data-theme="dark">
+
+  <header class="top">
+    <span class="mark">bartleby<span>["]</span></span>
+    <span class="grow"></span>
+    <time class="clock" id="clock" aria-label="Current time, UTC"></time>
+    <button class="switch sq" id="theme" type="button" aria-pressed="false" data-icon="moon" data-icon-size="16" aria-label="Dark mode" title="Dark mode"></button>
+    <button class="switch" id="mode" type="button" aria-pressed="false" title="Pro: once you have a transcript, the full editor"><span class="lbl">pro</span></button>
+  </header>
+
+  <nav class="rail" aria-label="Links">
+    <img class="logo" src="../brand/favicon.svg" width="28" height="28" alt="bartleby">
+    <button data-fly="about" data-tip="about" data-icon="about" aria-expanded="false" aria-label="About"></button>
+    <button data-fly="sites" data-tip="supported sites" data-icon="sites" aria-expanded="false" aria-label="Supported sites"></button>
+    <button data-fly="cli" data-tip="terminal version" data-icon="cli" aria-expanded="false" aria-label="Terminal version"></button>
+    <button data-fly="source" data-tip="source code" data-icon="source" aria-expanded="false" aria-label="Source code"></button>
+    <button data-fly="donate" data-tip="donate" data-icon="donate" aria-expanded="false" aria-label="Donate"></button>
+    <span class="grow"></span>
+    <button data-fly="settings" data-tip="settings" data-icon="settings" aria-expanded="false" aria-label="Settings"></button>
+  </nav>
+
+  <div class="scrim" id="scrim" hidden></div>
+
+  <section class="flyout" id="fly-tools" hidden>
+    <header><h2>tools</h2><button class="x" type="button" aria-label="Close" data-icon="close" data-icon-size="16"></button></header>
+    <div class="rows tool-list">
+      <button type="button" data-tool="transcribe" data-icon="subtitles"><span class="lbl"><b>transcribe</b>video or audio to text</span></button>
+      <button type="button" data-tool="compress" data-icon="compress"><span class="lbl"><b>compress</b>make a file smaller</span><span>soon</span></button>
+      <button type="button" data-tool="convert" data-icon="convert"><span class="lbl"><b>convert</b>change a file's format</span><span>soon</span></button>
+    </div>
+    <p class="dim">every tool runs on your device. nothing is uploaded.</p>
+  </section>
+  <section class="flyout" id="fly-about" hidden>
+    <header><h2>about</h2><button class="x" type="button" aria-label="Close" data-icon="close" data-icon-size="16"></button></header>
+    <p>bartleby turns short videos into text. paste a link, get the transcript.</p>
+    <p>the listening and writing happen on your own device, so nothing you paste is uploaded or kept.</p>
+    <p>there are no ads, no signup and no tracking. he would prefer not to.</p>
+    <p class="dim">named after the copyist in herman melville's 1853 story, who met every request with the same five words. this one sighs first, then does the job.</p>
+    <p class="dim">this is v1.0, the mvp. <a href="#" id="mvp-again">what works so far</a></p>
+    <p class="dim"><a href="https://zachdoxsee.com" target="_blank" rel="noopener">Built by Zach Doxsee</a></p>
+  </section>
+  <section class="flyout" id="fly-sites" hidden>
+    <header><h2>supported</h2><button class="x" type="button" aria-label="Close" data-icon="close" data-icon-size="16"></button></header>
+    <h3>by link</h3>
+    <ul class="list sites" id="site-list"></ul>
+    <h3>by file</h3>
+    <ul class="list">
+      <li><b>any audio or video file</b><span class="dim">  dropped on the page, or picked with the file button</span></li>
+      <li><b>tiktok videos</b><span class="dim">  save the video in the app first; tiktok makes visitors log in before it shows one</span></li>
+    </ul>
+    <p class="dim">private or deleted posts can't be fetched. he will tell you, flatly.</p>
+  </section>
+  <section class="flyout" id="fly-cli" hidden>
+    <header><h2>terminal</h2><button class="x" type="button" aria-label="Close" data-icon="close" data-icon-size="16"></button></header>
+    <p>the same tool as a command, for people who live in one.</p>
+    <pre class="cmd" data-copy="npm i -g bartleby">$ npm i -g bartleby</pre>
+    <pre class="cmd">$ bartleby https://instagram.com/reel/...
+( -_- ) ugh. fine.
+[ok] 87 words, saved to reel.md</pre>
+    <p class="dim">not published yet. the install command above is what it will be.</p>
+  </section>
+  <section class="flyout" id="fly-source" hidden>
+    <header><h2>source</h2><button class="x" type="button" aria-label="Close" data-icon="close" data-icon-size="16"></button></header>
+    <p>free and open source. read it, fork it, run your own.</p>
+    <pre class="cmd" data-copy="git clone https://github.com/zachdoxsee/bartleby">$ git clone https://github.com/zachdoxsee/bartleby</pre>
+    <div class="rows"><button type="button" data-fly="agent" data-icon="cli">set up with an agent</button></div>
+    <p class="dim">the repository isn't public yet; the address above is a placeholder.</p>
+  </section>
+  <section class="flyout" id="fly-agent" hidden>
+    <header><h2>set up with an agent</h2><button class="x" type="button" aria-label="Close" data-icon="close" data-icon-size="16"></button></header>
+    <p>give this to a coding agent, such as claude code, and it will get bartleby running on your machine.</p>
+    <pre class="cmd prompt" id="agent-prompt" data-copy></pre>
+    <p class="dim">it asks before installing anything or starting the fetcher. the repository address is a placeholder until it's public.</p>
+  </section>
+  <section class="flyout" id="fly-donate" hidden>
+    <header><h2>donate</h2><button class="x" type="button" aria-label="Close" data-icon="close" data-icon-size="16"></button></header>
+    <p>bartleby takes no ads and sells nothing. if he saved you an afternoon, tip the scrivener.</p>
+    <button class="btn pri" type="button" disabled>tip jar (coming soon)</button>
+    <p class="dim">he will not say thank you. he will think it.</p>
+  </section>
+
+  <section class="flyout" id="fly-settings" hidden>
+    <header><h2>settings</h2><button class="x" type="button" aria-label="Close" data-icon="close" data-icon-size="16"></button></header>
+
+    <div class="set-pane" data-pane="engine">
+      <label class="opt"><input type="radio" name="engine" value="standard" checked><span><b data-icon="e-standard" data-icon-size="16">standard</b>quick and light. gets the gist.<span class="chips"><i>73 MB</i><i>fast</i><i>1 word in 10 wrong</i></span></span></label>
+      <label class="opt"><input type="radio" name="engine" value="accurate"><span><b data-icon="e-accurate" data-icon-size="16">accurate</b>a larger model. far fewer mistakes.<span class="chips"><i>240 MB</i><i>3x slower</i><i>1 in 25 wrong</i></span></span></label>
+      <label class="opt"><input type="radio" name="engine" value="ultra"><span><b data-icon="e-ultra" data-icon-size="16">ultra</b>the larger model on the graphics card.<span class="chips"><i>393 MB</i><i>fastest</i><i>1 in 50 wrong</i></span></span></label>
+      <p class="dim" id="engine-note"></p>
+    </div>
+
+    <div class="set-pane" data-pane="language" hidden>
+      <label class="field" for="lang">spoken language</label>
+      <select id="lang"><option value="en">english</option><option value="es">spanish</option><option value="pt">portuguese</option><option value="fr">french</option><option value="de">german</option><option value="it">italian</option><option value="nl">dutch</option><option value="pl">polish</option><option value="ru">russian</option><option value="uk">ukrainian</option><option value="tr">turkish</option><option value="ar">arabic</option><option value="hi">hindi</option><option value="id">indonesian</option><option value="tl">tagalog</option><option value="vi">vietnamese</option><option value="th">thai</option><option value="ja">japanese</option><option value="ko">korean</option><option value="zh">chinese</option></select>
+      <p class="dim">the language spoken in the video. he can't tell on his own yet, so pick it before you paste.</p>
+      <p class="dim">translate, in the editor, turns any of these into english.</p>
+    </div>
+
+    <div class="set-pane" data-pane="look" hidden>
+      <div class="rows">
+        <button type="button" class="toggle" id="set-dark" aria-pressed="false" data-icon="moon">dark mode<span class="state"></span></button>
+        <button type="button" class="toggle" id="set-pro" aria-pressed="false" data-icon="edit">pro editor<span class="state"></span></button>
+      </div>
+      <p class="dim">pro swaps the plain transcript for the full editor: pages, formatting, preview and translate.</p>
+    </div>
+
+    <div class="set-pane" data-pane="device" hidden>
+      <p>pages, settings and the downloaded model are kept in this browser. nothing is sent anywhere.</p>
+      <div class="rows"><button type="button" id="clear-pages" data-icon="trash"><span class="lbl">delete saved pages</span></button></div>
+      <p class="dim">deleting pages can't be undone. the model stays downloaded so the next transcript is quick.</p>
+    </div>
+
+    <div class="seg" id="set-tabs" role="tablist" aria-label="Settings sections">
+      <button type="button" role="tab" data-pane="engine" aria-selected="true">engine</button>
+      <button type="button" role="tab" data-pane="language" aria-selected="false">language</button>
+      <button type="button" role="tab" data-pane="look" aria-selected="false">look</button>
+      <button type="button" role="tab" data-pane="device" aria-selected="false">device</button>
+    </div>
+  </section>
+
+  <section class="flyout" id="fly-more" hidden>
+    <header><h2>more</h2><button class="x" type="button" aria-label="Close" data-icon="close" data-icon-size="16"></button></header>
+    <div class="rows">
+      <button type="button" data-act="edit" data-icon="edit" id="m-edit"><span class="lbl">edit text</span></button>
+      <button type="button" data-act="translate" data-icon="translate" id="m-translate">translate to english</button>
+      <button type="button" data-act="pages" data-icon="pages">pages</button>
+      <button type="button" data-act="share" data-icon="share" id="m-share">share</button>
+    </div>
+    <div class="rows">
+      <button type="button" data-fly="settings" data-icon="settings">settings</button>
+      <button type="button" data-fly="about" data-icon="about">about</button>
+      <button type="button" data-fly="sites" data-icon="sites">supported sites</button>
+      <button type="button" data-fly="cli" data-icon="cli">terminal version</button>
+      <button type="button" data-fly="source" data-icon="source">source code</button>
+      <button type="button" data-fly="donate" data-icon="donate">donate</button>
+    </div>
+  </section>
+  <section class="flyout" id="fly-save" hidden>
+    <header><h2>save as</h2><button class="x" type="button" aria-label="Close" data-icon="close" data-icon-size="16"></button></header>
+    <div class="rows two" id="save-rows"></div>
+  </section>
+  <section class="flyout" id="fly-pages" hidden>
+    <header><h2>pages</h2><button class="x" type="button" aria-label="Close" data-icon="close" data-icon-size="16"></button></header>
+    <div class="rows" id="page-list"></div>
+    <div class="rows"><button type="button" data-act="newpage" data-icon="newpage">new blank page</button></div>
+  </section>
+
+  <section class="dialog" id="mvp-dialog" role="dialog" aria-modal="true" aria-labelledby="mvp-title" hidden>
+    <h2 id="mvp-title">this is v1.0. the mvp.</h2>
+    <p>the least he could do. he did it properly, though.</p>
+    <ul class="list">
+      <li><b>works:</b> files from your device, and direct links to audio or video files. transcribed on your device; nothing uploaded.</li>
+      <li><b>not yet:</b> links from instagram, youtube, tiktok and other sites. save the video and drop the file on him instead.</li>
+      <li><b>coming:</b> compress and convert.</li>
+    </ul>
+    <div class="row"><button class="btn pri" id="mvp-ok" type="button">got it</button></div>
+  </section>
+
+  <section class="dialog" id="ultra-dialog" role="dialog" aria-modal="true" aria-labelledby="ultra-title" hidden>
+    <h2 id="ultra-title">switch to ultra?</h2>
+    <p>a bigger model, run on your graphics card. fewest mistakes, fastest, biggest download.</p>
+    <ul class="list">
+      <li><b>393 MB,</b> downloaded once. standard is 73 MB.</li>
+      <li><b>good for</b> a recent laptop or desktop.</li>
+      <li><b>skip it</b> on a phone or a slow connection.</li>
+    </ul>
+    <div class="row">
+      <button class="btn pri" id="ultra-yes" type="button">use ultra</button>
+      <button class="btn sec" id="ultra-no" type="button">not now</button>
+    </div>
+  </section>
+
+  <section class="dialog" id="long-dialog" role="dialog" aria-modal="true" aria-labelledby="long-title" hidden>
+    <h2 id="long-title">this one's long.</h2>
+    <p><b id="long-len"></b> of audio. about <b id="long-est"></b> on the <span id="long-engine"></span> engine, on this device.</p>
+    <ul class="list">
+      <li><b>it runs here,</b> in this tab. you can use other tabs and apps meanwhile, but browsers slow a tab down when it isn't in front, so it can take about three times as long that way.</li>
+      <li><b>keep this tab open.</b> closing or reloading it stops the job.</li>
+      <li><b>on a phone,</b> keep the screen on and this page in front.</li>
+    </ul>
+    <p class="dim" id="long-hint"></p>
+    <div class="row">
+      <button class="btn pri" id="long-yes" type="button">start</button>
+      <button class="btn sec" id="long-no" type="button">not now</button>
+    </div>
+  </section>
+
+  <main class="editor">
+    <div class="tabs">
+      <div class="tablist" id="tablist" role="tablist"></div>
+      <button class="newtab" id="new-tab" type="button" aria-label="New tab" title="New blank document">+</button>
+      <span class="grow"></span>
+      <div class="tools" id="tools" hidden>
+        <span id="count" class="dim"></span>
+        <button class="btn sm sec" id="translate-btn" type="button" title="Write an English version of this video in a new tab" hidden>translate</button>
+        <button class="btn sm sec" id="preview-btn" type="button" aria-pressed="false">preview</button>
+        <button class="btn sm sec" id="copy" type="button">copy</button>
+        <button class="btn sm pri" id="dl-md" type="button">.md</button>
+        <button class="btn sm sec caret" id="save-btn" type="button" aria-haspopup="true" aria-expanded="false">save as</button>
+      </div>
+    </div>
+    <div class="fmt" id="fmt" role="toolbar" aria-label="Formatting" hidden>
+      <button type="button" data-f="h1" title="Heading">H1</button>
+      <button type="button" data-f="h2" title="Subheading">H2</button>
+      <i></i>
+      <button type="button" data-f="bold" title="Bold (Ctrl or Cmd + B)"><b>B</b></button>
+      <button type="button" data-f="italic" title="Italic (Ctrl or Cmd + I)"><em>I</em></button>
+      <button type="button" data-f="code" title="Code">&lt;&gt;</button>
+      <i></i>
+      <button type="button" data-f="ul" title="Bulleted list">• list</button>
+      <button type="button" data-f="ol" title="Numbered list">1. list</button>
+      <button type="button" data-f="task" title="Checklist">[ ] task</button>
+      <button type="button" data-f="quote" title="Quote">" quote</button>
+      <i></i>
+      <button type="button" data-f="link" title="Link (Ctrl or Cmd + K)">link</button>
+      <button type="button" data-f="hr" title="Divider">---</button>
+      <i></i>
+      <button type="button" id="insert-btn" class="caret" aria-haspopup="true" aria-expanded="false" title="Tables, checklists and text diagrams">insert</button>
+    </div>
+    <div class="menu" id="insert-menu" hidden></div>
+    <div class="menu" id="save-menu" hidden></div>
+    <div class="pane" id="pane-welcome">
+      <canvas id="rain" aria-hidden="true"></canvas>
+      <div class="code" id="welcome"></div>
+    </div>
+    <div class="pane ed" id="pane-doc" hidden>
+      <div class="gutter" id="gutter" aria-hidden="true"></div>
+      <textarea id="doc" spellcheck="false" aria-label="Markdown editor" placeholder="write here."></textarea>
+      <div class="mirror" id="mirror" aria-hidden="true"></div>
+      <div class="preview" id="preview" hidden></div>
+    </div>
+  </main>
+
+  <aside class="bart" aria-label="Bartleby">
+    <div class="bar"><span>bartleby</span><span class="dim" id="doing">waking</span></div>
+    <canvas id="hero-rain" aria-hidden="true"></canvas>
+    <div class="stage">
+      <figure class="bubble" id="bubble" hidden><blockquote></blockquote><figcaption></figcaption></figure>
+      <svg class="bt" id="sprite" width="160" height="144" role="img" aria-label="Bartleby, a small pixel figure in a bowler hat and green hoodie"></svg>
+    </div>
+    <div class="meter" id="meter" hidden><div id="meter-text"></div><div class="track"><i id="meter-bar"></i></div></div>
+    <div class="chat" id="chat" aria-live="polite"></div>
+    <div class="long" id="long" hidden>
+      <div class="pct" id="long-pct">0%</div>
+      <div class="left" id="long-left"></div>
+      <div class="track"><i id="long-bar"></i></div>
+      <p class="dim">you can leave this tab and i'll keep going, more slowly. it's quickest with this tab in front. just don't close it.</p>
+      <button class="btn sec sm" id="long-notify" type="button" data-icon="check" data-icon-size="14"><span class="lbl">tell me when it's done</span></button>
+    </div>
+    <div class="why" id="why" role="status" hidden>
+      <div class="why-head"><b id="why-title"></b><button class="x" id="why-x" type="button" aria-label="Dismiss" title="Dismiss" data-icon="close" data-icon-size="16"></button></div>
+      <div class="why-acts" id="why-acts"></div>
+      <details class="why-more" id="why-more"><summary>why?</summary>
+        <p id="why-text"></p>
+        <p class="onit" id="why-note"></p>
+        <p class="tech" id="why-detail"></p>
+      </details>
+    </div>
+    <div class="stub" id="stub" hidden><b id="stub-title"></b><p id="stub-text"></p></div>
+    <div class="skel" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+    <form class="ask" id="ask" autocomplete="off">
+      <div class="go-row">
+        <button class="btn pri big" id="send" type="button" data-icon="paste" title="Pastes the link on your clipboard and starts"><span class="lbl">paste link</span></button>
+        <button class="btn sec sq big" id="pick" type="button" data-icon="file" aria-label="Choose a file" title="Choose an audio or video file from this device"></button>
+      </div>
+      <div class="type-row">
+        <label for="link" class="sr">Video link</label>
+        <input id="link" type="text" inputmode="url" placeholder="or type a link here" spellcheck="false">
+        <button class="btn sec sq" id="go" data-icon="go" aria-label="Go" hidden></button>
+      </div>
+      <input id="file" type="file" accept="audio/*,video/*" hidden>
+    </form>
+  </aside>
+
+  <div class="toolbar" id="toolbar">
+    <button class="toolsw" id="tool-btn" type="button" data-fly="tools" aria-expanded="false" aria-label="Switch tool"><span class="lbl">transcribe</span></button>
+    <button class="btn sec back" id="back" type="button" data-icon="pages" hidden><span class="lbl">transcripts</span></button>
+  </div>
+
+  <nav class="dock" aria-label="Actions">
+    <div class="grp" data-on="start"><button type="button" data-fly="settings" data-icon="settings" aria-label="Settings"></button></div>
+    <div class="grp" data-on="start"><button type="button" data-fly="about" data-icon="about" aria-label="About"></button><button type="button" data-fly="sites" data-icon="sites" aria-label="Supported sites"></button></div>
+    <div class="grp" data-on="start"><button type="button" data-fly="cli" data-icon="cli" aria-label="Terminal version"></button><button type="button" data-fly="source" data-icon="source" aria-label="Source code"></button></div>
+    <div class="grp" data-on="start"><button type="button" data-fly="donate" data-icon="donate" aria-label="Donate"></button></div>
+
+    <div class="grp" data-on="simple"><button type="button" class="labelled" data-act="new" data-icon="back"><span class="lbl">back</span></button></div>
+    <div class="grp" data-on="pro"><button type="button" data-act="new" data-icon="plus" aria-label="New transcript"></button></div>
+    <div class="grp pri wide" data-on="simple"><button type="button" data-act="copy" data-icon="copy"><span class="lbl">copy</span></button></div>
+    <div class="grp" data-on="simple"><button type="button" data-act="md" data-icon="download" aria-label="Save as .md"></button><button type="button" data-act="share" data-icon="share" aria-label="Share"></button></div>
+    <div class="grp" data-on="pro"><button type="button" data-act="copy" data-icon="copy" aria-label="Copy"></button><button type="button" data-act="md" data-icon="download" aria-label="Save as .md"></button></div>
+    <div class="grp" data-on="pro"><button type="button" data-act="preview" data-icon="preview" aria-label="Preview"></button><button type="button" data-act="pages" data-icon="pages" aria-label="Pages"></button></div>
+    <div class="grp" data-on="simple pro"><button type="button" data-fly="more" data-icon="more" aria-label="More"></button></div>
+  </nav>
+
+  <footer class="status">
+    <span class="proto">bartleby v1.0 (mvp) · transcribed on your device, nothing uploaded</span>
+    <span class="right">
+      <span class="noads">no ads · no tracking</span>
+    </span>
+  </footer>
+</div>
+
+<script src="../brand/rain.js"></script>
+<script src="../brand/mascot.js"></script>
+<script src="icons.js"></script>
+<script src="brands.js"></script>
+<script src="config.js"></script>
+<script src="engine/engine.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,6 @@
+# Only the site itself is published: the page (prototype/) and the brand files it loads.
+.claude
+PLAN.md
+README.md
+prototype/test
+brand/index.html
